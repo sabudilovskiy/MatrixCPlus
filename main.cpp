@@ -5,6 +5,6 @@
 #include <Rational.h>
 
 int main() {
-
+    Matrix<Rational> matrix;
 }
 #endif
