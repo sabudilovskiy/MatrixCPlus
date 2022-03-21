@@ -6,13 +6,14 @@
 #include "gtest/gtest.h"
 #include "Rational.h"
 #include "Matrix.h"
-TEST(MatrixlTests, StringMatrixBasedTest)
+TEST(StringMatrixBasedTest, StringMatrixBasedTest)
 {
     int n = 3;
     int m = 3;
-    Rational** arr = new Rational*[m];
+    std::vector<std::vector<Rational>> arr;
+    arr.resize(m);
     for (int i = 0; i < m; i++){
-        arr[i] = new Rational[n];
+        arr[i].resize(n);
     }
     arr[0][0] = Rational(1,2);
     arr[0][1] = Rational(4,12);
@@ -27,14 +28,16 @@ TEST(MatrixlTests, StringMatrixBasedTest)
     std::string temp = matrix.to_string([](Rational rational) -> std::string { return rational.to_string();});
     EXPECT_EQ(temp , "1/2 1/3 3/2 \n2 -2/3 3/5 \n4/5 1/2 1/2 \n");
 }
-TEST(MatrixlTests, StringMatrixPlusTest) {
+TEST(MatrixBasedOperationTest, StringMatrixPlusTest) {
     int n = 3;
     int m = 3;
-    Rational** arr = new Rational*[m];
-    Rational** arr_2 = new Rational*[m];
+    std::vector<std::vector<Rational>> arr;
+    arr.resize(m);
+    std::vector<std::vector<Rational>> arr_2;
+    arr_2.resize(m);
     for (int i = 0; i < m; i++){
-        arr[i] = new Rational[n];
-        arr_2[i] = new Rational[n];
+        arr[i].resize(n);
+        arr_2[i].resize(n);
     }
     arr[0][0] = Rational(1,2);
     arr[0][1] = Rational(4,12);
@@ -60,14 +63,16 @@ TEST(MatrixlTests, StringMatrixPlusTest) {
     std::string temp = (matrix+matrix_2).to_string([](Rational rational) -> std::string { return rational.to_string();});
     EXPECT_EQ(temp , "3/4 26/33 5/3 \n16/7 -1/3 0 \n8/5 5/4 1 \n");
 }
-TEST(MatrixlTests, StringMatrixMinusTest) {
+TEST(MatrixBasedOperationTest, StringMatrixMinusTest) {
     int n = 3;
     int m = 3;
-    Rational** arr = new Rational*[m];
-    Rational** arr_2 = new Rational*[m];
+    std::vector<std::vector<Rational>> arr;
+    arr.resize(m);
+    std::vector<std::vector<Rational>> arr_2;
+    arr_2.resize(m);
     for (int i = 0; i < m; i++){
-        arr[i] = new Rational[n];
-        arr_2[i] = new Rational[n];
+        arr[i].resize(n);
+        arr_2[i].resize(n);
     }
     arr[0][0] = Rational(1,2);
     arr[0][1] = Rational(4,12);
@@ -93,14 +98,16 @@ TEST(MatrixlTests, StringMatrixMinusTest) {
     std::string temp = (matrix-matrix_2).to_string([](Rational rational) -> std::string { return rational.to_string();});
     EXPECT_EQ(temp , "1/4 -4/33 4/3 \n12/7 -1 6/5 \n0 -1/4 0 \n");
 }
-TEST(MatrixlTests, StringMatrixMultTest) {
+TEST(MatrixBasedOperationTest, StringMatrixMultTest) {
     int n = 3;
     int m = 3;
-    Rational** arr = new Rational*[m];
-    Rational** arr_2 = new Rational*[m];
+    std::vector<std::vector<Rational>> arr;
+    arr.resize(m);
+    std::vector<std::vector<Rational>> arr_2;
+    arr_2.resize(m);
     for (int i = 0; i < m; i++){
-        arr[i] = new Rational[n];
-        arr_2[i] = new Rational[n];
+        arr[i].resize(n);
+        arr_2[i].resize(n);
     }
     arr[0][0] = Rational(1,1);
     arr[0][1] = Rational(3,1);

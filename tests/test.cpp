@@ -3,3 +3,4 @@
 //
 #include "matrix_test.h"
 #include "rational_tests.h"
+#include "gauss_test.h"
