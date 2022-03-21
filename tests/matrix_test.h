@@ -24,7 +24,7 @@ TEST(StringMatrixBasedTest, StringMatrixBasedTest)
     arr[2][0] = Rational(4,5);
     arr[2][1] = Rational(4,8);
     arr[2][2] = Rational(3,6);
-    Matrix<Rational> matrix(arr, 3, 3);
+    Matrix<Rational> matrix(arr);
     std::string temp = matrix.to_string([](Rational rational) -> std::string { return rational.to_string();});
     EXPECT_EQ(temp , "1/2 1/3 3/2 \n2 -2/3 3/5 \n4/5 1/2 1/2 \n");
 }
@@ -58,8 +58,8 @@ TEST(MatrixBasedOperationTest, StringMatrixPlusTest) {
     arr_2[2][0] = Rational(4,5);
     arr_2[2][1] = Rational(3,4);
     arr_2[2][2] = Rational(1,2);
-    Matrix<Rational> matrix(arr, 3, 3);
-    Matrix<Rational> matrix_2(arr_2, 3, 3);
+    Matrix<Rational> matrix(arr);
+    Matrix<Rational> matrix_2(arr_2);
     std::string temp = (matrix+matrix_2).to_string([](Rational rational) -> std::string { return rational.to_string();});
     EXPECT_EQ(temp , "3/4 26/33 5/3 \n16/7 -1/3 0 \n8/5 5/4 1 \n");
 }
@@ -93,8 +93,8 @@ TEST(MatrixBasedOperationTest, StringMatrixMinusTest) {
     arr_2[2][0] = Rational(4,5);
     arr_2[2][1] = Rational(3,4);
     arr_2[2][2] = Rational(1,2);
-    Matrix<Rational> matrix(arr, 3, 3);
-    Matrix<Rational> matrix_2(arr_2, 3, 3);
+    Matrix<Rational> matrix(arr);
+    Matrix<Rational> matrix_2(arr_2);
     std::string temp = (matrix-matrix_2).to_string([](Rational rational) -> std::string { return rational.to_string();});
     EXPECT_EQ(temp , "1/4 -4/33 4/3 \n12/7 -1 6/5 \n0 -1/4 0 \n");
 }
@@ -128,8 +128,8 @@ TEST(MatrixBasedOperationTest, StringMatrixMultTest) {
     arr_2[2][0] = Rational(1,2);
     arr_2[2][1] = Rational(1,2);
     arr_2[2][2] = Rational(-1,2);
-    Matrix<Rational> matrix(arr, 3, 3);
-    Matrix<Rational> matrix_2(arr_2, 3, 3);
+    Matrix<Rational> matrix(arr);
+    Matrix<Rational> matrix_2(arr_2);
     std::string temp = (matrix*matrix_2).to_string([](Rational rational) -> std::string { return rational.to_string();});
     EXPECT_EQ(temp , "1 0 0 \n0 1 0 \n0 0 1 \n");
 }

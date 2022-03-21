@@ -5,7 +5,7 @@
 template<class T>
 Matrix<T>::Matrix(Matrix &&another) : arr(another.arr), m(another.m), n(another.n)
 {
-    another.arr = nullptr;
+    another.arr.clear();
     another.m = 0;
     another.n = 0;
 }
@@ -15,36 +15,23 @@ Matrix<T> &Matrix<T>::operator=(Matrix &another) {
     clear();
     m = another.m;
     n = another.n;
-    arr = new T*[m];
-    for (int i = 0; i < m; i++){
-        arr[i] = new T[n];
-        for (int j = 0; j < n; j++){
-            arr[i][j] = another.arr[i][j];
-        }
-    }
+    arr = another.arr;
+    return *this;
 }
 
 template<class T>
-Matrix<T>::Matrix(Matrix &another): m(m), n(n){
-    this->arr = new T*[m];
-    for (int i = 0; i < m; i++){
-        this->arr[i] = new T[n];
-        for (int j = 0; j < n; j++){
-            this->arr[i][j] = another.arr[i][j];
-        }
-    }
+Matrix<T>::Matrix(Matrix &another):arr(another.arr), m(another.m), n(another.n){
 }
 
 template<class T>
-Matrix<T>::Matrix(std::vector<std::vector<T>> arr, int m, int n): arr(arr), m(m), n(n) {
-    if (arr.size() != m) throw std::invalid_argument("");
-    else {
-        for (int i = 0; i < m; i++) if (arr[i].size() != n) throw std::invalid_argument("");
-    }
+Matrix<T>::Matrix(std::vector<std::vector<T>>& arr): arr(arr){
+    this->m = arr.size();
+    this->n = arr[0].size();
+    for (int i = 0; i < this->m; i++) if (arr[i].size() != this->n) throw std::invalid_argument("");
 }
 
 template<class T>
-Matrix<T>::Matrix() : arr(nullptr), m(0), n(0){}
+Matrix<T>::Matrix() : m(0), n(0){}
 
 template<class T>
 Matrix<T>& Matrix<T>::clear() {
@@ -70,7 +57,7 @@ Matrix<T> Matrix<T>::operator+(const Matrix<T> &right) const {
                 temp_arr[i][j] = arr[i][j] + right.arr[i][j];
             }
         }
-        return Matrix(temp_arr, m, n);
+        return Matrix(temp_arr);
     }
     else throw std::invalid_argument("матрицы разной размерности");
 }
@@ -86,7 +73,7 @@ Matrix<T> Matrix<T>::operator-(const Matrix<T> &right) const {
                 temp_arr[i][j] = arr[i][j] - right.arr[i][j];
             }
         }
-        return Matrix<T>(temp_arr, m, n);
+        return Matrix<T>(temp_arr);
     }
     else throw std::invalid_argument("матрицы разной размерности");
 }
@@ -106,7 +93,7 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T> &right) const {
                 }
             }
         }
-        return Matrix<T>(temp_arr, n, n);
+        return Matrix<T>(temp_arr);
     }
     else throw std::invalid_argument("матрицы разной размерности");
 }
@@ -238,15 +225,60 @@ Matrix<T> &Matrix<T>::div_strings(int a, T k) {
 
 template<class T>
 bool Matrix<T>::is_single() {
-    if (m == n){
-        T zero(0);
-        T one(1);
-        for (int i = 0; i < m; i++){
-            for (int j = 0; j < m; j++) if (i == j && arr[i][j] != one || i!=j && arr[i][j] != zero) return false;
-        }
-        return true;
+    T zero(0);
+    T one(1);
+    int k = std::min(m, n);
+    for (int i = 0; i < k; i++){
+            for (int j = 0; j < k; j++) if (i == j && arr[i][j] != one || i!=j && arr[i][j] != zero) return false;
     }
-    else return false;
+}
 
+template<class T>
+Matrix<T> &Matrix<T>::reduce_null_strings() {
+    for (int i = m - 1; i >= 0; i--){
+        if (is_null_string(i)) delete_string(i);
+    }
+    return *this;
+}
+
+template<class T>
+Matrix<T> &Matrix<T>::delete_string(int a) {
+    if (0 <= a && a < m){
+        arr.erase(arr.begin() + a);
+        return *this;
+    }
+    else throw std::invalid_argument("");
+}
+
+template<class T>
+int Matrix<T>::get_m() const {
+    return m;
+}
+
+template<class T>
+int Matrix<T>::get_n() const {
+    return n;
+}
+
+template<class T>
+const std::vector<T> &Matrix<T>::operator[](int i) {
+    if (0 <= i && i < m) return arr[i];
+}
+
+template<class T>
+Matrix<T> &Matrix<T>::operator=(Matrix &&another) {
+    arr.clear();
+    m = another.m;
+    n = another.n;
+    arr = another.arr;
+    return *this;
+}
+
+template<class T>
+Matrix<T>::Matrix(std::vector<T>& arr) {
+    this->arr.resize(1);
+    m = 1;
+    this->arr[0] = arr;
+    n = this->arr[0].size();
 }
 

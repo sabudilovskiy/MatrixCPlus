@@ -5,9 +5,9 @@
 #include "Linear_space.h"
 template<class T>
 Linear_space<T>::Linear_space(std::vector<Matrix<T>> arr) {
-    int m = arr[0].m;
-    for (auto vector : arr) {
-        if (vector.m != m || vector.n != 1) throw std::invalid_argument("");
+    int m = arr[0].get_m();
+    for (Matrix<T> vector : arr) {
+        if (vector.get_m() != m || vector.get_m() != 1) throw std::invalid_argument("");
     }
     base = arr;
 }

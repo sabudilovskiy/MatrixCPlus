@@ -4,8 +4,8 @@
 #include "Point.h"
 
 template<class T>
-Augmented_matrix<T>::Augmented_matrix(std::vector<std::vector<T>> left, std::vector<std::vector<T>> right) : Matrix<T>(left), augmented_arr(right){
-    if (right.size != left.size) throw std::invalid_argument("");
+Augmented_matrix<T>::Augmented_matrix(std::vector<std::vector<T>>& left, std::vector<std::vector<T>>& right) :  Matrix<T>(left), augmented_arr(right){
+    if (right.size() != left.size()) throw std::invalid_argument("");
     augmented_n = augmented_arr[0].size();
     for (int i = 1; i < this->m; i++){
         if (augmented_arr[i].size() != augmented_n) throw std::invalid_argument("");
@@ -26,7 +26,7 @@ std::string Augmented_matrix<T>::to_string(std::string (*toString)(const T)) con
 
 template<class T>
 Matrix<T> &Augmented_matrix<T>::sum_lines(int to, int from, T cof) {
-    Matrix::sum_lines(to, from, cof);
+    Matrix<T>::sum_lines(to, from, cof);
     for (int i = 0; i < augmented_n; i++) augmented_arr[to][i] = augmented_arr[to][i] + augmented_arr[from][i] * cof;
     return *this;
 }
@@ -39,7 +39,7 @@ bool Augmented_matrix<T>::is_null_string(int a) {
             return false;
         }
     }
-    return Matrix::is_null_string(a);
+    return Matrix<T>::is_null_string(a);
 }
 
 template<class T>
@@ -47,13 +47,13 @@ Matrix<T> &Augmented_matrix<T>::swap_strings(int a, int b) {
     for (int i = 0; i < augmented_n; i++) {
         std::swap(augmented_arr[a][i], augmented_arr[b][i]);
     }
-    return Matrix::swap_strings(a, b);
+    return Matrix<T>::swap_strings(a, b);
 }
 
 template<class T>
 Matrix<T> &Augmented_matrix<T>::div_strings(int a, T k) {
-    for (int i = 0; i < this->n; i++)  augmented_arr[i] = augmented_arr[i] / k;
-    return Matrix::div_strings(a, k);
+    for (int i = 0; i < this->augmented_n; i++)  augmented_arr[a][i] = augmented_arr[a][i] / k;
+    return Matrix<T>::div_strings(a, k);
 }
 
 template<class T>
@@ -68,9 +68,9 @@ MathObject<T> *Augmented_matrix<T>::solve_system() {
             answer.resize(copy.n);
             for (int i = 0;  i < copy.n; i++)
                 if (copy.arr[i][i] == one)
-                    answer[i] = copy.augmented_arr[0][i];
+                    answer[i] = copy.augmented_arr[i][0];
                 else return nullptr;
-            return new Point(answer);
+            return new Point<T>(answer);
         }
         else if (copy.m < copy.n){
             std::vector<Matrix<T>> base;
@@ -109,7 +109,7 @@ MathObject<T> *Augmented_matrix<T>::solve_system() {
                 return new Affine_space<T>(v, base);
             }
         }
-
+        else return nullptr;
     }
     else throw std::invalid_argument("");
 }
@@ -118,13 +118,13 @@ template<class T>
 bool Augmented_matrix<T>::is_homogeneous() {
     T zero(0);
     if (augmented_n > 1) return false;
-    for (int i = 0; i < this->m; i++) if (!augmented_arr[i][0] == zero) return false;
+    for (int i = 0; i < this->m; i++) if (augmented_arr[i][0] != zero) return false;
     return true;
 }
 
 template<class T>
-Matrix<T>& Augmented_matrix<T>::substitution(std::vector<T> array) {
-    if (this->n - this->m == array.size && augmented_n == 1) {
+Matrix<T> Augmented_matrix<T>::substitution(std::vector<T> array) {
+    if (this->n - this->m == array.size() && augmented_n == 1) {
         if (this->is_single()) {
             T zero(0);
             T minus(-1);
@@ -135,7 +135,7 @@ Matrix<T>& Augmented_matrix<T>::substitution(std::vector<T> array) {
                 for (int j =  this->m; j < this->n; j++) {
                     //если и коэффициент в матрице ненулевой и подставляется не ноль у соответствующей переменной
                     if (this->arr[i][j] != zero && cof[j]!= zero) {
-                        cof[i] += this->arr[i][j] * cof[j] * minus;
+                        cof[i] = cof[i] + this->arr[i][j] * cof[j] * minus;
                     }
                 }
                 if (augmented_arr[i][0]!=zero) {
@@ -152,4 +152,10 @@ template<class T>
 Matrix<T> &Augmented_matrix<T>::reset_augmented() {
     for (int i = 0; i < this->m; i++) for (int j = 0; j < augmented_n; j++) augmented_arr[i][j] = 0;
     return *this;
+}
+
+template<class T>
+Matrix<T> &Augmented_matrix<T>::delete_string(int a) {
+    augmented_arr.erase(augmented_arr.begin() + a);
+    return Matrix<T>::delete_string(a);
 }
