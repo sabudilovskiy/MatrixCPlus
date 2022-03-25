@@ -8,7 +8,7 @@ add_executable(Matrix
         src/Rational.h
         src/Support.h
         src/Matrix.h
-        src/Support.cpp
+        src/Support.tpp
         tests/test.cpp
         src/Augmented_matrix.h
         src/MathObject.h

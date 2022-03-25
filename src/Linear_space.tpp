@@ -13,7 +13,7 @@ Linear_space<T>::Linear_space(std::vector<Matrix<T>> arr) {
 }
 
 template<class T>
-std::string Linear_space<T>::to_string(std::string (*toString)(const T)) {
+std::string Linear_space<T>::to_string(std::string (*toString)(const T &)) {
     std::string answer = "Линейное пространство: \n";
     int i = 1;
     for (Matrix<T>& vector : base) {

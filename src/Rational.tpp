@@ -2,6 +2,7 @@
 // Created by MRV on 20.03.2022.
 //
 #include "Rational.h"
+#include "Support.h"
 long long int Rational::get_numerator() const {
     return numerator;
 }
@@ -102,4 +103,30 @@ Rational &Rational::operator=(const Rational &&right) {
     numerator = right.numerator;
     denominator = right.denominator;
     return *this;
+}
+
+std::istream & operator>>(std::istream &in, Rational &rat) {
+    std::string buffer;
+    in >> buffer;
+    int i = 0;
+    int sep = 0;
+    if (buffer[i] == '-') i++;
+    while (i < buffer.size() && is_digit(buffer[i])){
+        i++;
+    }
+    if (i == buffer.size()){
+        rat.numerator = std::stoi(buffer);
+        rat.denominator = 1;
+    }
+    else if (buffer[i] == '/' && i != 0){
+        rat.numerator = std::stoi(buffer.substr(0, i));
+        rat.denominator = std::stoi (buffer.substr(i+1));
+    }
+    else throw std::invalid_argument("");
+    return in;
+}
+
+std::ostream &operator<<(std::ostream &out, Rational &rat) {
+    out << rat.to_string();
+    return out;
 }

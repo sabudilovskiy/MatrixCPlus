@@ -11,8 +11,7 @@ class Point : public MathObject<T>{
     int n = 0;
 public:
     Point(const std::vector<T> &cords);
-
-    std::string to_string(std::string (*toString)(const T)) override;
+    std::string to_string(std::string (*toString)(const T &)) override;
 };
 
 

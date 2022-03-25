@@ -10,7 +10,7 @@ class Linear_space : public MathObject<T>{
      std::vector<Matrix<T>> base;
 public:
     Linear_space(std::vector<Matrix<T>> arr);
-    std::string to_string(std::string (*toString)(const T)) override;
+    std::string to_string(std::string (*toString)(const T &)) override;
 };
 
 #include "Linear_space.tpp"

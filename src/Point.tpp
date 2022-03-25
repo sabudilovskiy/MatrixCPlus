@@ -4,7 +4,7 @@
 
 #include "Point.h"
 template<class T>
-std::string Point<T>::to_string(std::string (*toString)(const T)) {
+std::string Point<T>::to_string(std::string (*toString)(const T &)) {
     std::string temp = "(";
     for (int i = 0; i < cords.size() - 1; i++){
         temp+=toString(cords[i]) + ";";

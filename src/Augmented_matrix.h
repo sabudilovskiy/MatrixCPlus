@@ -12,7 +12,7 @@ class Augmented_matrix : public Matrix<T>{
     int augmented_n = 0;
 public:
     Augmented_matrix(std::vector<std::vector<T>>& left, std::vector<std::vector<T>>& right);
-    std::string to_string(std::string (*toString)(const T)) const override;
+    std::string to_string(std::string (*toString)(const T &)) const override;
     MathObject<T>* solve_system();
     bool is_homogeneous();
 protected:

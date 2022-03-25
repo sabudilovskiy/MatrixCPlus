@@ -13,7 +13,7 @@ class Affine_space : public MathObject<T>{
     std::vector<Matrix<T>> base;
 public:
     Affine_space(Matrix<T> _v0 , std::vector<Matrix<T>> arr);
-     std::string to_string(std::string (*toString)(const T));
+     std::string to_string(std::string (*toString)(const T &)) override;
 };
 
 

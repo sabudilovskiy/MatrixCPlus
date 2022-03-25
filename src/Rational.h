@@ -18,9 +18,10 @@ public:
     Rational operator-(const Rational &right) const;
     Rational operator*(const Rational& right) const;
     Rational operator/(const Rational &right) const;
-
     Rational& operator=(const Rational& right);
     Rational& operator=(const Rational&& right);
+    friend std::istream& operator>>(std::istream& in, Rational& rat);
+    friend std::ostream & operator<<(std::ostream& out, Rational& rat);
 };
 #include "Rational.tpp"
 

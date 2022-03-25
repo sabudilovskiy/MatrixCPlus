@@ -21,10 +21,10 @@ public:
     Matrix();
     Matrix& clear();
     ~Matrix();
-    virtual Matrix<T> operator+(const Matrix<T>& right) const;
-    virtual Matrix<T> operator-(const Matrix<T>& right) const;
-    virtual Matrix<T> operator*(const Matrix<T>& right) const;
-    virtual std::string to_string(std::string (*toString)(const T)) const;
+    Matrix<T> operator+(const Matrix<T>& right);
+    Matrix<T> operator-(const Matrix<T>& right);
+    Matrix<T> operator*(const Matrix<T>& right);
+    virtual std::string to_string(std::string (*toString)(const T&)) const;
     virtual Matrix& triangular_transformation();
     virtual Matrix& gauss_transformation();
     bool is_single();

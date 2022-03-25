@@ -13,7 +13,7 @@ Augmented_matrix<T>::Augmented_matrix(std::vector<std::vector<T>>& left, std::ve
 }
 
 template<class T>
-std::string Augmented_matrix<T>::to_string(std::string (*toString)(const T)) const {
+std::string Augmented_matrix<T>::to_string(std::string (*toString)(const T &)) const {
     std::string temp;
     for (int i = 0; i < this->m; i++) {
         for(int j = 0; j < this->n; j++) temp+= toString(this->arr[i][j]) + " ";

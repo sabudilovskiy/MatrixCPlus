@@ -2,6 +2,7 @@
 // Created by MRV on 20.03.2022.
 //
 #include "Matrix.h"
+#include "Rational.h"
 template<class T>
 Matrix<T>::Matrix(Matrix &&another) : arr(another.arr), m(another.m), n(another.n)
 {
@@ -47,30 +48,14 @@ Matrix<T>::~Matrix() {
 }
 
 template<class T>
-Matrix<T> Matrix<T>::operator+(const Matrix<T> &right) const {
-    if (m == right.m && n == right.n){
+Matrix<T> Matrix<T>::operator+(const Matrix<T> &right) {
+    if (this->m == right.m && this->n == right.n){
         std::vector<std::vector<Rational>> temp_arr;
-        temp_arr.resize(m);
-        for (int i = 0; i < m; i++){
-            temp_arr[i].resize(n);
-            for (int j = 0; j < n; j++){
-                temp_arr[i][j] = arr[i][j] + right.arr[i][j];
-            }
-        }
-        return Matrix(temp_arr);
-    }
-    else throw std::invalid_argument("матрицы разной размерности");
-}
-
-template<class T>
-Matrix<T> Matrix<T>::operator-(const Matrix<T> &right) const {
-    if (m == right.m && n == right.n){
-        std::vector<std::vector<Rational>> temp_arr;
-        temp_arr.resize(m);
-        for (int i = 0; i < m; i++){
-            temp_arr[i].resize(n);
-            for (int j = 0; j < n; j++){
-                temp_arr[i][j] = arr[i][j] - right.arr[i][j];
+        temp_arr.resize(this->m);
+        for (int i = 0; i < this->m; i++){
+            temp_arr[i].resize(this->n);
+            for (int j = 0; j < this->n; j++){
+                temp_arr[i][j] = this->arr[i][j] + right.arr[i][j];
             }
         }
         return Matrix<T>(temp_arr);
@@ -79,17 +64,33 @@ Matrix<T> Matrix<T>::operator-(const Matrix<T> &right) const {
 }
 
 template<class T>
-Matrix<T> Matrix<T>::operator*(const Matrix<T> &right) const {
-    if (n == right.m){
+Matrix<T> Matrix<T>::operator-(const Matrix<T> &right) {
+    if (this->m == right.m && this->n == right.n){
+        std::vector<std::vector<Rational>> temp_arr;
+        temp_arr.resize(this->m);
+        for (int i = 0; i < this->m; i++){
+            temp_arr[i].resize(this->n);
+            for (int j = 0; j < this->n; j++){
+                temp_arr[i][j] = this->arr[i][j] - right.arr[i][j];
+            }
+        }
+        return Matrix<T>(temp_arr);
+    }
+    else throw std::invalid_argument("матрицы разной размерности");
+}
+
+template<class T>
+Matrix<T> Matrix<T>::operator*(const Matrix<T> &right) {
+    if (this->n == right.m){
         int p = right.n;
         std::vector<std::vector<Rational>> temp_arr;
-        temp_arr.resize(m);
-        for (int i = 0; i < m; i++){
+        temp_arr.resize(this->m);
+        for (int i = 0; i < this->m; i++){
             temp_arr[i].resize(p);
             for (int j = 0; j < p; j++){
-                temp_arr[i][j] = arr[i][0] * right.arr[0][j];
-                for (int k = 1; k < n; k++){
-                    temp_arr[i][j] = temp_arr[i][j] + arr[i][k] * right.arr[k][j];
+                temp_arr[i][j] = this->arr[i][0] * right.arr[0][j];
+                for (int k = 1; k < this->n; k++){
+                    temp_arr[i][j] = temp_arr[i][j] + this->arr[i][k] * right.arr[k][j];
                 }
             }
         }
@@ -99,7 +100,7 @@ Matrix<T> Matrix<T>::operator*(const Matrix<T> &right) const {
 }
 
 template<class T>
-std::string Matrix<T>::to_string(std::string (*toString)(const T)) const {
+std::string Matrix<T>::to_string(std::string (*toString)(const T&)) const {
     std::string temp;
     for (int i = 0; i < m; i++) {
         for(int j = 0; j < n; j++) temp+= toString(arr[i][j]) + " ";
