@@ -2,7 +2,7 @@
 // Created by MRV on 21.03.2022.
 //
 
-#include "Affine_space.h"
+#include "../includes/Affine_space.h"
 template<class T>
 std::string Affine_space<T>::to_string(std::string (*toString)(const T &)) {
     std::string answer = "Афинное пространство: \n v0 = (";

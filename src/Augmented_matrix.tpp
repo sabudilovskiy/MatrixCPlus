@@ -1,7 +1,7 @@
-#include "Augmented_matrix.h"
-#include "Affine_space.h"
-#include "Linear_space.h"
-#include "Point.h"
+#include "../includes/Augmented_matrix.h"
+#include "../includes/Affine_space.h"
+#include "../includes/Linear_space.h"
+#include "../includes/Point.h"
 
 template<class T>
 Augmented_matrix<T>::Augmented_matrix(std::vector<std::vector<T>>& left, std::vector<std::vector<T>>& right) :  Matrix<T>(left), augmented_arr(right){

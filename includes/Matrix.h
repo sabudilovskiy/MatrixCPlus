@@ -24,6 +24,7 @@ public:
     Matrix<T> operator+(const Matrix<T>& right);
     Matrix<T> operator-(const Matrix<T>& right);
     Matrix<T> operator*(const Matrix<T>& right);
+    Matrix<T> operator*(const T& right);
     virtual std::string to_string(std::string (*toString)(const T&)) const;
     virtual Matrix& triangular_transformation();
     virtual Matrix& gauss_transformation();

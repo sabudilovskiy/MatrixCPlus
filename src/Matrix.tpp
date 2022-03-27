@@ -1,8 +1,8 @@
 //
 // Created by MRV on 20.03.2022.
 //
-#include "Matrix.h"
-#include "Rational.h"
+#include "../includes/Matrix.h"
+#include "../includes/Rational.h"
 template<class T>
 Matrix<T>::Matrix(Matrix &&another) : arr(another.arr), m(another.m), n(another.n)
 {
@@ -12,16 +12,19 @@ Matrix<T>::Matrix(Matrix &&another) : arr(another.arr), m(another.m), n(another.
 }
 
 template<class T>
-Matrix<T> &Matrix<T>::operator=(Matrix &another) {
-    clear();
-    m = another.m;
-    n = another.n;
-    arr = another.arr;
-    return *this;
+Matrix<T>::Matrix() : m(0), n(0){}
+
+template<class T>
+Matrix<T>::Matrix(std::vector<T>& arr) {
+    this->arr.resize(1);
+    m = 1;
+    this->arr[0] = arr;
+    n = this->arr[0].size();
 }
 
 template<class T>
-Matrix<T>::Matrix(Matrix &another):arr(another.arr), m(another.m), n(another.n){
+Matrix<T>::~Matrix() {
+    clear();
 }
 
 template<class T>
@@ -32,19 +35,33 @@ Matrix<T>::Matrix(std::vector<std::vector<T>>& arr): arr(arr){
 }
 
 template<class T>
-Matrix<T>::Matrix() : m(0), n(0){}
+const std::vector<T> &Matrix<T>::operator[](int i) {
+    if (0 <= i && i < m) return arr[i];
+}
 
 template<class T>
-Matrix<T>& Matrix<T>::clear() {
+Matrix<T> &Matrix<T>::operator=(Matrix &&another) {
     arr.clear();
-    m = 0;
-    n = 0;
+    m = another.m;
+    n = another.n;
+    arr = another.arr;
     return *this;
 }
 
 template<class T>
-Matrix<T>::~Matrix() {
+Matrix<T> Matrix<T>::operator*(const T &right) {
+    std::vector<std::vector<T>> temp = arr;
+    for (int i = 0; i < m; i++) for (int j = 0; j < n; j++) temp[i][j] = temp[i][j] * right;
+    return temp;
+}
+
+template<class T>
+Matrix<T> &Matrix<T>::operator=(Matrix &another) {
     clear();
+    m = another.m;
+    n = another.n;
+    arr = another.arr;
+    return *this;
 }
 
 template<class T>
@@ -164,7 +181,8 @@ Matrix<T> &Matrix<T>::triangular_transformation() {
         }
         else if (f != -1){
             if (is_null_string(i)) {
-                move_string_to_end(i);
+                swap_strings(i, f);
+                move_string_to_end(f);
                 //Получилось, что i строка является нулевой. Смещаем её вниз.
                 i--;
                 local_m--;
@@ -252,6 +270,14 @@ Matrix<T> &Matrix<T>::delete_string(int a) {
 }
 
 template<class T>
+Matrix<T>& Matrix<T>::clear() {
+    arr.clear();
+    m = 0;
+    n = 0;
+    return *this;
+}
+
+template<class T>
 int Matrix<T>::get_m() const {
     return m;
 }
@@ -260,26 +286,3 @@ template<class T>
 int Matrix<T>::get_n() const {
     return n;
 }
-
-template<class T>
-const std::vector<T> &Matrix<T>::operator[](int i) {
-    if (0 <= i && i < m) return arr[i];
-}
-
-template<class T>
-Matrix<T> &Matrix<T>::operator=(Matrix &&another) {
-    arr.clear();
-    m = another.m;
-    n = another.n;
-    arr = another.arr;
-    return *this;
-}
-
-template<class T>
-Matrix<T>::Matrix(std::vector<T>& arr) {
-    this->arr.resize(1);
-    m = 1;
-    this->arr[0] = arr;
-    n = this->arr[0].size();
-}
-

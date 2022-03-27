@@ -1,8 +1,8 @@
 //
 // Created by MRV on 20.03.2022.
 //
-#include "Rational.h"
-#include "Support.h"
+#include "../includes/Rational.h"
+#include "../includes/Support.h"
 long long int Rational::get_numerator() const {
     return numerator;
 }
@@ -21,6 +21,7 @@ bool Rational::operator!=(const Rational &rhs) const {
 }
 
 Rational::Rational(long long int numerator, long long int denominator) : numerator(numerator), denominator(denominator){
+    if (denominator == 0) throw std::invalid_argument("");
     simplify();
 }
 
@@ -49,21 +50,19 @@ void Rational::simplify() {
 
 Rational Rational::operator+(const Rational &right) const {
     long long new_denominator = find_LCM(denominator, right.denominator);
-    long long domnozh = new_denominator / denominator;
-    long long new_numerator = numerator * domnozh;
-    new_numerator += right.numerator * (new_denominator / right.denominator);
+    long long cof = new_denominator / denominator;
+    long long right_cof = new_denominator / right.denominator;
+    long long new_numerator = numerator * cof + right.numerator * right_cof;
     Rational temp(new_numerator, new_denominator);
-    temp.simplify();
     return temp;
 }
 
 Rational Rational::operator-(const Rational &right) const {
     long long new_denominator = find_LCM(denominator, right.denominator);
-    long long domnozh = new_denominator / denominator;
-    long long new_numerator = numerator * domnozh;
-    new_numerator -= right.numerator * (new_denominator / right.denominator);
+    long long cof = new_denominator / denominator;
+    long long right_cof = new_denominator / right.denominator;
+    long long new_numerator = numerator * cof - right.numerator * right_cof;
     Rational temp(new_numerator, new_denominator);
-    temp.simplify();
     return temp;
 }
 
@@ -115,12 +114,12 @@ std::istream & operator>>(std::istream &in, Rational &rat) {
         i++;
     }
     if (i == buffer.size()){
-        rat.numerator = std::stoi(buffer);
+        rat.numerator = std::stoll(buffer);
         rat.denominator = 1;
     }
     else if (buffer[i] == '/' && i != 0){
-        rat.numerator = std::stoi(buffer.substr(0, i));
-        rat.denominator = std::stoi (buffer.substr(i+1));
+        rat.numerator = std::stoll(buffer.substr(0, i));
+        rat.denominator = std::stoll (buffer.substr(i+1));
     }
     else throw std::invalid_argument("");
     return in;

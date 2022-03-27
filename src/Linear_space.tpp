@@ -2,7 +2,7 @@
 // Created by MRV on 21.03.2022.
 //
 
-#include "Linear_space.h"
+#include "../includes/Linear_space.h"
 template<class T>
 Linear_space<T>::Linear_space(std::vector<Matrix<T>> arr) {
     int m = arr[0].get_m();

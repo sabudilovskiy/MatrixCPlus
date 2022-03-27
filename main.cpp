@@ -1,9 +1,9 @@
 #include "DEBUG.h"
 #ifndef DEBUG
-#include "Augmented_matrix.h"
+#include "includes/Augmented_matrix.h"
 #include <iostream>
-#include <Rational.h>
-#include "MathObject.h"
+#include "includes/Rational.h"
+#include "includes/MathObject.h"
 int main() {
     setlocale(LC_ALL, "Russian");
     std::string error = "Допущена ошибка при вводе. Повторите ввод: ";

@@ -12,16 +12,16 @@ class Augmented_matrix : public Matrix<T>{
     int augmented_n = 0;
 public:
     Augmented_matrix(std::vector<std::vector<T>>& left, std::vector<std::vector<T>>& right);
-    std::string to_string(std::string (*toString)(const T &)) const override;
     MathObject<T>* solve_system();
     bool is_homogeneous();
+    std::string to_string(std::string (*toString)(const T &)) const override;
 protected:
-    virtual Matrix<T>& sum_lines(int to, int from, T cof);
-    virtual bool is_null_string(int a);
-    virtual Matrix<T>& swap_strings(int a, int b);
-    virtual Matrix<T>& div_strings(int a, T k);
-    Matrix<T>& reset_augmented();
+    Matrix<T>& sum_lines(int to, int from, T cof) override;
+    bool is_null_string(int a) override;
+    Matrix<T>& swap_strings(int a, int b) override;
+    Matrix<T>& div_strings(int a, T k) override;
     Matrix<T>& delete_string(int a) override;
+    Matrix<T>& reset_augmented();
     Matrix<T> substitution(std::vector<T> array);
 };
 

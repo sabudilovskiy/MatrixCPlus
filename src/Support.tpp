@@ -1,7 +1,7 @@
 //
 // Created by MRV on 20.03.2022.
 //
-#include "Support.h"
+#include "../includes/Support.h"
 long long find_GCD(long long int temp_a, long long int temp_b) {
     temp_a = abs(temp_a);
     temp_b = abs(temp_b);
@@ -19,29 +19,6 @@ bool is_digit(char ch) {
     return '0' <= ch && ch <= '9';
 }
 
-template<class T>
-T input(bool (*verifer)(const T &), T (*converter)(const std::string &), const std::string &input, const std::string &_error) {
-    std::string temp;
-    std::cout << input;
-    std::cin >> temp;
-    try {
-        T answer = converter(temp);
-        if (verifer(answer)) return answer;
-        throw std::exception("");
-    }
-    catch (std::exception) {
-        while (true) {
-            std::cout << _error;
-            std::cin >> temp;
-            try {
-                T answer = converter(temp);
-                if (verifer(answer)) return answer;
-            }
-            catch (std::exception) {
-            }
-        }
-    }
-}
 
 template<class T>
 T input(bool (*verifer)(const T &), const std::string &input, const std::string &_error) {
