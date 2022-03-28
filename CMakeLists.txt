@@ -18,6 +18,8 @@ add_executable(Matrix
         includes/Point.h
         includes/Affine_space.h)
 add_subdirectory(lib/gtest)
-include_directories(lib/gtest/googletest/include src)
+include_directories(lib/gtest/googletest/include
+        src
+        includes)
 target_link_libraries(Matrix gtest gtest_main)
 

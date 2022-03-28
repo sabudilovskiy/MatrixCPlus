@@ -2,14 +2,15 @@
 // Created by MRV on 21.03.2022.
 //
 
-#include "../includes/Linear_space.h"
+#include "Linear_space.h"
 template<class T>
-Linear_space<T>::Linear_space(std::vector<Matrix<T>> arr) {
+Linear_space<T>::Linear_space(const std::vector<Matrix<T>>& arr) {
     int m = arr[0].get_m();
-    for (Matrix<T> vector : arr) {
-        if (vector.get_m() != m || vector.get_m() != 1) throw std::invalid_argument("");
+    for (int i = 0; i < arr.size(); i++) {
+        if (arr[i].get_m() != m || arr[i].get_m() != 1) throw std::invalid_argument("");
     }
-    base = arr;
+    base.resize(arr.size());
+    for (int i = 0; i < arr.size(); i++) base[i] = arr[i];
 }
 
 template<class T>

@@ -1,7 +1,8 @@
-#include "../includes/Augmented_matrix.h"
-#include "../includes/Affine_space.h"
-#include "../includes/Linear_space.h"
-#include "../includes/Point.h"
+#include "Augmented_matrix.h"
+#include "MathObject.h"
+#include "Affine_space.h"
+#include "Linear_space.h"
+#include "Point.h"
 
 template<class T>
 Augmented_matrix<T>::Augmented_matrix(std::vector<std::vector<T>>& left, std::vector<std::vector<T>>& right) :  Matrix<T>(left), augmented_arr(right){
@@ -57,7 +58,9 @@ Matrix<T> &Augmented_matrix<T>::div_strings(int a, T k) {
 }
 
 template<class T>
-MathObject<T> *Augmented_matrix<T>::solve_system() {
+MathObject<T> *Augmented_matrix<T>::solve_system()
+{
+    MathObject<T> * math_object = nullptr;
     if (augmented_n == 1) {
         Augmented_matrix<T> copy(this->arr, augmented_arr);
         copy.gauss_transformation();
@@ -70,7 +73,7 @@ MathObject<T> *Augmented_matrix<T>::solve_system() {
                 if (copy.arr[i][i] == one)
                     answer[i] = copy.augmented_arr[i][0];
                 else return nullptr;
-            return new Point<T>(answer);
+                math_object = new Point<T>(answer);
         }
         else if (copy.m < copy.n){
             std::vector<Matrix<T>> base;
@@ -87,12 +90,11 @@ MathObject<T> *Augmented_matrix<T>::solve_system() {
                         base[i] = copy.substitution(cords_vector);
                     }
                 }
-                return new Linear_space<T>(base);
+                math_object = new Linear_space<T>(base);
             }
             else{
                 //Так как СЛАУ является неоднородной и прямоугольной, то она задаёт линейное многообразие. Найдём базис.
                 //Найдём частное решение
-                T zero(0);
                 std::vector<T> cords_vector;
                 cords_vector.resize(copy.n - copy.m, zero);
                 //Это вектор, на который перенесёно линейное подпространство
@@ -106,12 +108,13 @@ MathObject<T> *Augmented_matrix<T>::solve_system() {
                         base[i] = copy.substitution(cords_vector);
                     }
                 }
-                return new Affine_space<T>(v, base);
+                math_object = new Affine_space<T>(v, base);
             }
         }
-        else return nullptr;
+        else math_object = nullptr;
     }
     else throw std::invalid_argument("");
+    return math_object;
 }
 
 template<class T>

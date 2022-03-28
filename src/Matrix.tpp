@@ -1,8 +1,8 @@
 //
 // Created by MRV on 20.03.2022.
 //
-#include "../includes/Matrix.h"
-#include "../includes/Rational.h"
+#include "Matrix.h"
+#include "Rational.h"
 template<class T>
 Matrix<T>::Matrix(Matrix &&another) : arr(another.arr), m(another.m), n(another.n)
 {
@@ -56,7 +56,7 @@ Matrix<T> Matrix<T>::operator*(const T &right) {
 }
 
 template<class T>
-Matrix<T> &Matrix<T>::operator=(Matrix &another) {
+Matrix<T> &Matrix<T>::operator=(const Matrix &another) {
     clear();
     m = another.m;
     n = another.n;
@@ -250,6 +250,7 @@ bool Matrix<T>::is_single() {
     for (int i = 0; i < k; i++){
             for (int j = 0; j < k; j++) if (i == j && arr[i][j] != one || i!=j && arr[i][j] != zero) return false;
     }
+    return true;
 }
 
 template<class T>
@@ -264,6 +265,7 @@ template<class T>
 Matrix<T> &Matrix<T>::delete_string(int a) {
     if (0 <= a && a < m){
         arr.erase(arr.begin() + a);
+        m--;
         return *this;
     }
     else throw std::invalid_argument("");
@@ -285,4 +287,9 @@ int Matrix<T>::get_m() const {
 template<class T>
 int Matrix<T>::get_n() const {
     return n;
+}
+
+template<class T>
+Matrix<T>::Matrix(const Matrix &another) : arr(another.arr), m(another.m), n(another.n) {
+
 }

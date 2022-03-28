@@ -13,9 +13,9 @@ protected:
     int m, n;
 public:
     Matrix(Matrix&& another);
-    Matrix& operator= (Matrix& another);
+    Matrix(const Matrix& another);
+    Matrix& operator= (const Matrix& another);
     Matrix& operator= (Matrix&& another);
-    Matrix(Matrix& another);
     Matrix(std::vector<std::vector<T>>& arr);
     Matrix(std::vector<T>& arr);
     Matrix();

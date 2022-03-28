@@ -1,8 +1,8 @@
 //
 // Created by MRV on 20.03.2022.
 //
-#include "../includes/Rational.h"
-#include "../includes/Support.h"
+#include "Rational.h"
+#include "Support.h"
 long long int Rational::get_numerator() const {
     return numerator;
 }

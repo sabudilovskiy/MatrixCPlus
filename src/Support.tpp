@@ -1,7 +1,7 @@
 //
 // Created by MRV on 20.03.2022.
 //
-#include "../includes/Support.h"
+#include "Support.h"
 long long find_GCD(long long int temp_a, long long int temp_b) {
     temp_a = abs(temp_a);
     temp_b = abs(temp_b);

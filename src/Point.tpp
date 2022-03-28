@@ -2,7 +2,7 @@
 // Created by MRV on 21.03.2022.
 //
 
-#include "../includes/Point.h"
+#include "Point.h"
 template<class T>
 std::string Point<T>::to_string(std::string (*toString)(const T &)) {
     std::string temp = "(";

@@ -48,8 +48,8 @@ int main() {
                     }
                     break;
                 }
+                std::cout << "Ответ:\n";
                 std::cout << answer.to_string([](const Rational& rational){
-                    std::cout << "Ответ:\n";
                     return rational.to_string();
                 });
             }
@@ -62,19 +62,20 @@ int main() {
             int n = input<int>([](const int& n){return n >= 1;}, "Введите вторую размерность основной матрицы: ", error);
             std::vector<std::vector<Rational>> main, aug;
             main.resize(m);
-            std::cout << "Введите основную матрицу: ";
+            aug.resize(m);
+            std::cout << "Введите основную матрицу: \n";
             for (int i = 0; i < m; i++) {
                 main[i].resize(n);
                 for (int j = 0; j < n; j++) main[i][j] = input<Rational>("", error);
             }
-            std::cout << "Введите столбец свободных членов: ";
+            std::cout << "Введите столбец свободных членов: \n";
             for (int i = 0; i < m; i++) {
                 aug[i].resize(1);
-                main[i][1] = input<Rational>("", error);
+                aug[i][0] = input<Rational>("", error);
             }
             MathObject<Rational>* answer = Augmented_matrix<Rational> (main, aug).solve_system();
             if (answer == nullptr){
-                std::cout << "Нет корней.";
+                std::cout << "Нет корней.\n";
             }
             else {
                 std::cout << answer->to_string([](const Rational &rat) { return rat.to_string(); });
