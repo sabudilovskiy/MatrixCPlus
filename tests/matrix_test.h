@@ -134,4 +134,51 @@ TEST(MatrixBasedOperationTest, StringMatrixMultTest) {
     EXPECT_EQ(temp , "1 0 0 \n0 1 0 \n0 0 1 \n");
 }
 
+class FictureMatrix : public ::testing::Test {
+protected:
+    Matrix<Rational> matrix1, matrix2;
+    void SetUp() override{
+        int n = 3;
+        int m = 3;
+        std::vector<std::vector<Rational>> arr;
+        arr.resize(m);
+        std::vector<std::vector<Rational>> arr_2;
+        arr_2.resize(m);
+        for (int i = 0; i < m; i++){
+            arr[i].resize(n);
+            arr_2[i].resize(n);
+        }
+        arr[0][0] = Rational(1,1);
+        arr[0][1] = Rational(3,1);
+        arr[0][2] = Rational(5,1);
+        arr[1][0] = Rational(2,1);
+        arr[1][1] = Rational(4,1);
+        arr[1][2] = Rational(6,1);
+        arr[2][0] = Rational(3,1);
+        arr[2][1] = Rational(7,1);
+        arr[2][2] = Rational(9,1);
+
+        arr_2[0][0] = Rational(-3,2);
+        arr_2[0][1] = Rational(2,1);
+        arr_2[0][2] = Rational(-1,2);
+        arr_2[1][0] = Rational(0,1);
+        arr_2[1][1] = Rational(-3,2);
+        arr_2[1][2] = Rational(1,1);
+        arr_2[2][0] = Rational(1,2);
+        arr_2[2][1] = Rational(1,2);
+        arr_2[2][2] = Rational(-1,2);
+        matrix1 = Matrix(arr);
+        matrix2 = Matrix(arr_2);
+    }
+    void TearDown() override{
+    };
+
+};
+
+TEST_F(FictureMatrix, Test1){
+    EXPECT_NO_THROW(matrix1.clear());
+}
+TEST_F(FictureMatrix, Test2){
+    EXPECT_EQ(matrix1.get_m(), 3);
+}
 #endif

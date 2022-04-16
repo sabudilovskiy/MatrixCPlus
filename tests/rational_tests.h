@@ -21,4 +21,5 @@ TEST(RationalTests, StringDivTest) {
 EXPECT_EQ((Rational(2,9) / Rational(1,3)).to_string(), "2/3");
 EXPECT_EQ((Rational(5,4) / Rational(4,10)).to_string(), "25/8");
 }
+
 #endif
